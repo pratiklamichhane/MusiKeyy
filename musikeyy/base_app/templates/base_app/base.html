@@ -114,7 +114,14 @@
       bis_skin_checked="1"
     >
       <div class="offcanvas-header" bis_skin_checked="1">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+        <div class="profile-container d-flex align-items-center gap-5">
+          <img src="https://avatars.githubusercontent.com/u/110966247?s=400&u=096b73bfaf277bcd4875ec6561bbb4d0be03bd09&v=4" alt="" width="90px"
+          style="border-radius:100px">
+          <div class="user-details">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pratikx64</h5>
+        <p>A person who loves music.</p>
+      </div>
+      </div>
         <button
           type="button"
           class="btn-close text-reset"
@@ -124,29 +131,10 @@
       </div>
       <div class="offcanvas-body" bis_skin_checked="1">
         <div bis_skin_checked="1">
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
-        </div>
-        <div class="dropdown mt-3" bis_skin_checked="1">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Dropdown button
-          </button>
-          <ul
-            class="dropdown-menu"
-            aria-labelledby="dropdownMenuButton"
-            style=""
-          >
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
+          <p>Welcome to your profile <strong>Pratikx64</strong>. Here you can manage your songs , album and the artists. </p>
+          <hr>
+          <h4>My creations.</h4>
+        </div>       
       </div>
     </div>
     {% block body %} {% endblock body %}
@@ -173,5 +161,6 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static "js/main.js" %}"></script>
   </body>
 </html>
