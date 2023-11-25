@@ -1,0 +1,135 @@
+{% extends "base_app/base.html" %} {% block title %}Home{% endblock title %}
+{%block body %}
+<div class="stats-container m-5 mt-4 d-flex flex-wrap justify-content-between">
+  <div class="stats d-flex gap-5 flex-wrap">
+    <div
+      class="card border-primary mb-3"
+      style="max-width: 20rem"
+      bis_skin_checked="1"
+    >
+      <div class="card-header" bis_skin_checked="1">Total Songs</div>
+      <div class="card-body" bis_skin_checked="1">
+        <h4 class="card-title">21 <i class="ri-music-2-fill"></i></h4>
+        <p class="card-text">Songs Available.</p>
+      </div>
+    </div>
+    <div
+      class="card border-success mb-3"
+      style="max-width: 20rem"
+      bis_skin_checked="1"
+    >
+      <div class="card-header" bis_skin_checked="1">Total Creators</div>
+      <div class="card-body" bis_skin_checked="1">
+        <h4 class="card-title">9 <i class="ri-speak-fill"></i></h4>
+        <p class="card-text">Creators Available.</p>
+      </div>
+    </div>
+    <div
+      class="card border-light mb-3"
+      style="max-width: 20rem"
+      bis_skin_checked="1"
+    >
+      <div class="card-header" bis_skin_checked="1">Your Songs</div>
+      <div class="card-body" bis_skin_checked="1">
+        <h4 class="card-title">3 <i class="ri-album-fill"></i></h4>
+        <p class="card-text">You Uploaded.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="notifications">
+    <h5>Notifications <i class="ri-notification-3-fill"></i></h5>
+
+    <div
+      class="toast show"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      bis_skin_checked="1"
+    >
+      <div class="toast-header" bis_skin_checked="1">
+        <strong class="me-auto">New Music</strong>
+        <small>11 mins ago</small>
+        <button
+          type="button"
+          class="btn-close ms-2 mb-1"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        >
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="toast-body" bis_skin_checked="1">
+        New music uploaded by {{artist.artist_name}}.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="body-section m-5 table-responsive">
+  <hr />
+  <h4>Latest Songs <i class="ri-fire-fill"></i></h4>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Song Name</th>
+        <th scope="col">Artist Name</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="table-dark"
+        data-bs-toggle="modal"
+        data-bs-target="#musicmodal"
+      >
+        <th scope="row">
+          <img
+            src="https://th.bing.com/th/id/R.0c012bed01f69bd578864d66bb166282?rik=BDtXlXljZ3lyKg&pid=ImgRaw&r=0"
+            width="50px"
+            style="border-radius: 100px"
+            alt=""
+          />
+        </th>
+        <td>No role modelz</td>
+        <td>J Cole</td>
+        <td>3:04</td>
+        <td>
+          <a>
+            <i class="ri-play-circle-fill ri-2x"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% comment %} song-detail modal {% endcomment %}
+<div class="modal" id="musicmodal" bis_skin_checked="1">
+  <div class="modal-dialog" role="document" bis_skin_checked="1">
+    <div class="modal-content" bis_skin_checked="1">
+      <div class="modal-header" bis_skin_checked="1">
+        <h5 class="modal-title">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body" bis_skin_checked="1">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer" bis_skin_checked="1">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} song-detail modal ends{% endcomment %} {% endblock body %}
