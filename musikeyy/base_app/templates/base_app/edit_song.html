@@ -1,0 +1,19 @@
+{% extends "base_app/base.html" %} 
+{% block title %}Edit Song{% endblock title %}
+{% block body %}
+
+<h3 class="text-center m-3">Edit Song <i class="ri-music-2-fill"></i></i></h3>
+
+<div class="d-flex justify-content-center mb-5">
+    <div class="card border-primary mb-3 p-3" >
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

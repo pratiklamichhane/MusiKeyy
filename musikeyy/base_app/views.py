@@ -54,3 +54,36 @@ def create_song(request):
     else:
         form = SongForm()
     return render(request, 'base_app/add_song.html', {'form': form})
+
+def edit_artist(request, artist_id):
+    artist = get_object_or_404(Artist, pk=artist_id)
+    if request.method == 'POST':
+        form = ArtistForm(request.POST, instance=artist)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = ArtistForm(instance=artist)
+    return render(request, 'base_app/edit_artist.html', {'form': form})
+
+def edit_album(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    if request.method == 'POST':
+        form = AlbumForm(request.POST, instance=album)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = AlbumForm(instance=album)
+    return render(request, 'base_app/edit_album.html', {'form': form})
+
+def edit_song(request, song_id):
+    song = get_object_or_404(Song, pk=song_id)
+    if request.method == 'POST':
+        form = SongForm(request.POST, request.FILES, instance=song)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = SongForm(instance=song)
+    return render(request, 'base_app/edit_song.html', {'form': form})
