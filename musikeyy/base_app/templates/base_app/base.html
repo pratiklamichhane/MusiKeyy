@@ -47,7 +47,7 @@
         >
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="#"
+              <a class="nav-link active" href="{% url "index" %}"
                 ><i class="ri-home-smile-fill"></i> Home
                 <span class="visually-hidden">(current)</span>
               </a>
@@ -82,7 +82,7 @@
                 <a class="dropdown-item" href="#"
                   ><i class="ri-mv-fill"></i> My Song's</a
                 >
-                <a class="dropdown-item" href="#"
+                <a class="dropdown-item" href="{% url "add_song" %}"
                   ><i class="ri-file-add-fill"></i> Upload Music</a
                 >
                 <div class="dropdown-divider" bis_skin_checked="1"></div>
@@ -139,9 +139,9 @@
             <strong>Note!</strong>If you didn't find the corresponding <strong>Artist</strong> and <strong>Album</strong> while uploading song , please add it from below buttons.
           </div>
           <h4 class="text-white mb-5">Upload Now</h4>
-          <h5><i class="ri-heart-add-fill"></i> Add Songs</h5>
-          <h5><i class="ri-user-add-fill"></i> Add Artists</h5>
-          <h5><i class="ri-folder-add-fill"></i> Add Albums</h5>
+          <h5><i class="ri-heart-add-fill"><a href="{% url "add_song" %}" class="text-decoration-none"></i> Add Song </a></h5>
+          <h5><i class="ri-user-add-fill"><a href="{% url "add_artist" %}" class="text-decoration-none"></i> Add Artist </a></h5>
+          <h5><i class="ri-folder-add-fill"></i> <a href="{% url "add_album" %}" class="text-decoration-none">Add Album </a></h5>
           <hr>
           <h4 class="text-white mb-5">My creations.</h4>
           <h5><i class="ri-music-2-fill"></i> My Songs</h5>

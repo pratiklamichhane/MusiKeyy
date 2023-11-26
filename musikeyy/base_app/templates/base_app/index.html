@@ -96,15 +96,12 @@
         <td>
           <span id="duration{{ forloop.counter }}">Loading...</span>
           <script>
-            // Function to format duration in mm:ss format
             function formatDuration(time) {
               var minutes = Math.floor(time / 60);
               var seconds = Math.floor(time % 60);
               var formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
               return minutes + ":" + formattedSeconds;
             }
-
-            // Update displayed duration dynamically when the song plays
             (function () {
               var audio = new Audio("{{ song.song.url }}");
               var durationSpan = document.getElementById(
@@ -117,7 +114,7 @@
 
                 setInterval(function () {
                   if (!audio.paused && audio.currentTime > 0) {
-                    duration -= 1; // Decrease duration by 1 second
+                    duration -= 1; 
                     durationSpan.textContent = formatDuration(duration);
                   }
                 }, 1000);
