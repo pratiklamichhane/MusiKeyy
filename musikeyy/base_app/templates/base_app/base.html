@@ -114,12 +114,13 @@
       bis_skin_checked="1"
     >
       <div class="offcanvas-header" bis_skin_checked="1">
+        
         <div class="profile-container d-flex align-items-center gap-5">
           <img src="https://avatars.githubusercontent.com/u/110966247?s=400&u=096b73bfaf277bcd4875ec6561bbb4d0be03bd09&v=4" alt="" width="90px"
           style="border-radius:100px">
           <div class="user-details">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pratikx64</h5>
-        <p>A person who loves music.</p>
+        <p class="text-white" >A person who loves music.</p>
       </div>
       </div>
         <button
@@ -133,7 +134,22 @@
         <div bis_skin_checked="1">
           <p>Welcome to your profile <strong>Pratikx64</strong>. Here you can manage your songs , album and the artists. </p>
           <hr>
-          <h4>My creations.</h4>
+          <div class="alert alert-dismissible alert-info" bis_skin_checked="1">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Note!</strong>If you didn't find the corresponding <strong>Artist</strong> and <strong>Album</strong> while uploading song , please add it from below buttons.
+          </div>
+          <h4 class="text-white mb-5">Upload Now</h4>
+          <h5><i class="ri-heart-add-fill"></i> Add Songs</h5>
+          <h5><i class="ri-user-add-fill"></i> Add Artists</h5>
+          <h5><i class="ri-folder-add-fill"></i> Add Albums</h5>
+          <hr>
+          <h4 class="text-white mb-5">My creations.</h4>
+          <h5><i class="ri-music-2-fill"></i> My Songs</h5>
+          <h5><i class="ri-speak-fill"></i> My Artists</h5>
+          <h5><i class="ri-album-fill"></i> My Albums</h5>
+          <hr>
+          <button type="button" class="btn btn-outline-danger"><i class="ri-logout-box-r-line"></i> Logout</button>
+
         </div>       
       </div>
     </div>

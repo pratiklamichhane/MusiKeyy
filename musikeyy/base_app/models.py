@@ -19,14 +19,14 @@ class Artist(models.Model):
 
 
 class Album(models.Model):
-    artist = models.ForeignKey("Artist" , verbose_name=_("Artist Album"), on_delete=models.CASCADE)
+    artist = models.ForeignKey("Artist", verbose_name=_("Artist"), on_delete=models.SET_NULL, null=True, blank=True)
     albumName = models.CharField(_("Album Name"), max_length=50)
-    created = models.DateTimeField(_("Artist Created Date"), auto_now_add=True)
+    created = models.DateTimeField(_("Album Created Date"), auto_now_add=True)
     last_updated = models.DateTimeField(_("Latest Album Update"), auto_now=True)
 
     class Meta:
-        verbose_name= _("Album")
-        verbose_name_plural= _("Albums")
+        verbose_name = _("Album")
+        verbose_name_plural = _("Albums")
 
     def __str__(self):
         return self.albumName

@@ -9,7 +9,7 @@
     >
       <div class="card-header" bis_skin_checked="1">Total Songs</div>
       <div class="card-body" bis_skin_checked="1">
-        <h4 class="card-title">21 <i class="ri-music-2-fill"></i></h4>
+        <h4 class="card-title">{{total_song}} <i class="ri-music-2-fill"></i></h4>
         <p class="card-text">Songs Available.</p>
       </div>
     </div>
@@ -20,8 +20,8 @@
     >
       <div class="card-header" bis_skin_checked="1">Total Creators</div>
       <div class="card-body" bis_skin_checked="1">
-        <h4 class="card-title">9 <i class="ri-speak-fill"></i></h4>
-        <p class="card-text">Creators Available.</p>
+        <h4 class="card-title">{{total_artist}} <i class="ri-speak-fill"></i></h4>
+        <p class="card-text">Artists Available.</p>
       </div>
     </div>
     <div
@@ -29,10 +29,10 @@
       style="max-width: 20rem"
       bis_skin_checked="1"
     >
-      <div class="card-header" bis_skin_checked="1">Your Songs</div>
+      <div class="card-header" bis_skin_checked="1">Total Albums</div>
       <div class="card-body" bis_skin_checked="1">
-        <h4 class="card-title">3 <i class="ri-album-fill"></i></h4>
-        <p class="card-text">You Uploaded.</p>
+        <h4 class="card-title">{{total_album}} <i class="ri-album-fill"></i></h4>
+        <p class="card-text">Albums Available.</p>
       </div>
     </div>
   </div>
@@ -48,8 +48,8 @@
       bis_skin_checked="1"
     >
       <div class="toast-header" bis_skin_checked="1">
-        <strong class="me-auto">New Music</strong>
-        <small>11 mins ago</small>
+        <strong class="me-auto">{{ latest_song.album.artist.artistName }}</strong>
+        <small>{{ latest_song.created | timesince }} ago</small>
         <button
           type="button"
           class="btn-close ms-2 mb-1"
@@ -60,7 +60,7 @@
         </button>
       </div>
       <div class="toast-body" bis_skin_checked="1">
-        New music uploaded by {{artist.artist_name}}.
+        Song - <strong>{{ latest_song.songName }} </strong>.
       </div>
     </div>
   </div>
