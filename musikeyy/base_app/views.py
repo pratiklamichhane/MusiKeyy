@@ -4,8 +4,6 @@ from django.urls import reverse
 from .models import Song , Artist , Album
 from .forms import ArtistForm, AlbumForm, SongForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Create your views here.
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def index(request):
     allSongs = Song.objects.all().order_by('-id')
