@@ -81,7 +81,7 @@
     </thead>
     <tbody>
       <tr>
-        {% for song in allSongs %}
+        {% for song in songs %}
         <th scope="row">
           <img
             src="{{song.songThumbnail.url}}"
@@ -196,32 +196,29 @@
 
   </table>
 </tbody>
-{% comment %} pagination {% endcomment %}
-<div bis_skin_checked="1">
+
+<div class="pagination-container">
   <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" href="#">&laquo;</a>
+    {% if songs.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1">&laquo;</a>
     </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ songs.previous_page_number }}">{{ songs.previous_page_number }}</a>
+    </li>
+    {% endif %}
     <li class="page-item active">
-      <a class="page-link" href="#">1</a>
+      <a class="page-link" href="?page={{ songs.number }}">{{ songs.number }}</a>
+    </li>
+    {% if songs.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ songs.next_page_number }}">{{ songs.next_page_number }}</a>
     </li>
     <li class="page-item">
-      <a class="page-link" href="#">2</a>
+      <a class="page-link" href="?page={{ songs.paginator.num_pages }}">&raquo;</a>
     </li>
-    <li class="page-item">
-      <a class="page-link" href="#">3</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">4</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">5</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">&raquo;</a>
-    </li>
+    {% endif %}
   </ul>
 </div>
 </div>
-{% comment %} pagination {% endcomment %}
  {% endblock body %}

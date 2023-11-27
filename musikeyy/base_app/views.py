@@ -3,21 +3,33 @@ from django.shortcuts import render , get_object_or_404, redirect
 from django.urls import reverse
 from .models import Song , Artist , Album
 from .forms import ArtistForm, AlbumForm, SongForm
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 def index(request):
     allSongs = Song.objects.all().order_by('-id')
+    paginator = Paginator(allSongs, 7)
+
+    page_number = request.GET.get('page')
+    try:
+        songs = paginator.page(page_number)
+    except PageNotAnInteger:
+        songs = paginator.page(1)
+    except EmptyPage:
+        songs = paginator.page(paginator.num_pages)
+
     total_artist = Artist.objects.count()
     total_album = Album.objects.count()
     total_song = Song.objects.count()
     latest_song = Song.objects.order_by('-created').first()
-    # Calculate duration for each song
-    return render(request , 'base_app/index.html', context={
-        "allSongs" : allSongs,
-        "total_artist" : total_artist,
-        "total_album" : total_album,
-        "latest_song": latest_song,
-        "total_song": total_song,
+
+    return render(request, 'base_app/index.html', context={
+        'songs': songs,
+        'total_artist': total_artist,
+        'total_album': total_album,
+        'latest_song': latest_song,
+        'total_song': total_song,
     })
 
 def view_song(request, id):
@@ -64,7 +76,7 @@ def edit_artist(request, artist_id):
             return redirect('/')
     else:
         form = ArtistForm(instance=artist)
-    return render(request, 'base_app/edit_artist.html', {'form': form})
+    return render(request, 'base_app/edit_artist.html', {'form': form , 'artist' : artist})
 
 def edit_album(request, album_id):
     album = get_object_or_404(Album, pk=album_id)
@@ -75,7 +87,8 @@ def edit_album(request, album_id):
             return redirect('/')
     else:
         form = AlbumForm(instance=album)
-    return render(request, 'base_app/edit_album.html', {'form': form})
+    return render(request, 'base_app/edit_album.html', {'form': form,
+    'album' : album})
 
 def edit_song(request, song_id):
     song = get_object_or_404(Song, pk=song_id)
@@ -86,4 +99,29 @@ def edit_song(request, song_id):
             return redirect('/')
     else:
         form = SongForm(instance=song)
-    return render(request, 'base_app/edit_song.html', {'form': form})
+    return render(request, 'base_app/edit_song.html', {'form': form ,
+    'song' : song})
+
+def delete_artist(request, artist_id):
+    artist = get_object_or_404(Artist, pk=artist_id)
+    if request.method == 'POST':
+        artist.delete()
+        return redirect('/')  
+    form = ArtistForm(instance=artist)  
+    return render(request, 'edit_artist.html', {'artist': artist, 'form': form})
+
+def delete_album(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    if request.method == 'POST':
+        album.delete()
+        return redirect('/')  
+    form = AlbumForm(instance=album)
+    return render(request, 'edit_album.html', {'album': album, 'form': form})
+
+def delete_song(request, song_id):
+    song = get_object_or_404(Song, pk=song_id)
+    if request.method == 'POST':
+        song.delete()
+        return redirect('/') 
+    form = SongForm(instance=song) 
+    return render(request, 'edit_song.html', {'song': song, 'form': form})

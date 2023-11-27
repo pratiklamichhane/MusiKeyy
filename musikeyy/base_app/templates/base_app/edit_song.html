@@ -11,9 +11,35 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <button class="btn btn-danger float-end" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{ song.id }}">Delete</button>
             </form>
         </div>
     </div>
 </div>
 
+
+<div class="modal" id="deleteModal{{ song.id }}" bis_skin_checked="1">
+    <div class="modal-dialog" role="document" bis_skin_checked="1">
+      <div class="modal-content" bis_skin_checked="1">
+        <div class="modal-header" bis_skin_checked="1">
+          <h5 class="modal-title">Delete song : {{song.songName}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body" bis_skin_checked="1">
+          <p>Are you sure you want to delete song <strong> {{song.songName}}</strong> by {{ song.album.artist.artistName }} ?</p>
+        </div>
+        <div class="modal-footer" bis_skin_checked="1">
+          <form action="{% url 'delete_song' song.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ song.id }}">
+            <button class="btn btn-danger"type="submit">Delete Song</button>
+        </form>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock body %}
