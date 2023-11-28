@@ -5,28 +5,40 @@
     <div class="container d-flex justify-content-center">
         <div class="card border-primary mb-3 mt-4">
             <div class="card-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="{{ form.username.id_for_label }}">Username:</label>
-                        {{ form.username }}
+                        <label for="{{ user_form.username.id_for_label }}">Username:</label>
+                        {{ user_form.username }}
                     </div>
                     <div class="form-group">
-                        <label for="{{ form.email.id_for_label }}">Email:</label>
-                        {{ form.email }}
+                        <label for="{{ user_form.email.id_for_label }}">Email:</label>
+                        {{ user_form.email }}
                     </div>
                     <div class="form-group">
-                        <label for="{{ form.password1.id_for_label }}">Password:</label>
-                        {{ form.password1 }}
+                        <label for="{{ user_form.password1.id_for_label }}">Password:</label>
+                        {{ user_form.password1 }}
                     </div>
                     <div class="form-group">
-                        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
-                        {{ form.password2 }}
+                        <label for="{{ user_form.password2.id_for_label }}">Confirm Password:</label>
+                        {{ user_form.password2 }}
                     </div>
+                    <div class="form-group">
+                        <label for="{{ profile_form.bio.id_for_label }}">Bio:</label>
+                        <textarea class="form-control" rows="4" id="{{ profile_form.bio.id_for_label }}" name="{{ profile_form.bio.name }}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ profile_form.profile_picture.id_for_label }}">Profile Picture:</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="{{ profile_form.profile_picture.id_for_label }}" name="{{ profile_form.profile_picture.name }}">
+                                <label class="custom-file-label" for="{{ profile_form.profile_picture.id_for_label }}">Choose file</label>
+                            </div>
+                        </div>
+                    </div>                    
                     <button type="submit" class="btn btn-primary mt-3 float-end">Sign Up <i class="ri-login-box-line"></i></button>
                 </form>
             </div>
         </div>
     </div>
-    
 {% endblock body %}
