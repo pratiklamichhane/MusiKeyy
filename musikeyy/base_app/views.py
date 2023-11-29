@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Song , Artist , Album
 from .forms import ArtistForm, AlbumForm, SongForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     allSongs = Song.objects.all().order_by('-id')
@@ -34,6 +35,8 @@ def view_song(request, id):
     song = Song.objects.get(pk=id)
     return HttpResponseRedirect(reverse('index'))
 
+
+@login_required
 def create_artist(request):
     if request.method == 'POST':
         form = ArtistForm(request.POST)
@@ -45,6 +48,7 @@ def create_artist(request):
         form = ArtistForm()
     return render(request, 'base_app/add_artist.html', {'form': form})
 
+@login_required
 def create_album(request):
     if request.method == 'POST':
         form = AlbumForm(request.POST)
@@ -55,6 +59,7 @@ def create_album(request):
         form = AlbumForm()
     return render(request, 'base_app/add_album.html', {'form': form})
 
+@login_required
 def create_song(request):
     if request.method == 'POST':
         form = SongForm(request.POST, request.FILES)

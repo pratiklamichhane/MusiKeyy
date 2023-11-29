@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate , logout as auth_logout
 from .forms import SignUpForm, ProfileForm
 from .models import UserProfile 
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.forms import AuthenticationForm
 
 def signup(request):
     if request.method == 'POST':
@@ -12,15 +12,20 @@ def signup(request):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             profile = profile_form.save(commit=False)
-            profile.user = user  # Link the profile to the user
-            profile.save()  # Save the profile data
+            profile.user = user
+            profile.save()
             login(request, user)
             return redirect('index')
     else:
         user_form = SignUpForm()
         profile_form = ProfileForm()
+        login_form = AuthenticationForm()
     
-    return render(request, 'accounts/signup.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, 'accounts/signup.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'login_form': login_form 
+    })
 
 
 def login_view(request):
