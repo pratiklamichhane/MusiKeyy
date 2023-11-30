@@ -1,0 +1,142 @@
+{% extends "base_app/base.html" %}
+{% block title %}My Songs{% endblock title %}
+
+{% block body %}
+<div class="text-center mt-3">
+<h2> Your Songs</h2>
+<p class="text-white">Here you can manage , edit and delete your songs.</p>
+</div>
+<div class="body-section m-5 table-responsive">
+    <hr />
+    <h4>Your Songs <i class="ri-fire-fill"></i></h4>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Song Name</th>
+          <th scope="col">Artist Name</th>
+          <th scope="col">Album</th>
+          <th scope="col">Duration</th>
+          <th scope="col">Actions</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for song in user_songs %}
+          <th scope="row">
+            <img
+              src="{{song.songThumbnail.url}}"
+              width="50px"
+              style="border-radius: 100px"
+              alt=""
+            />
+          </th>
+          <td>{{ song.songName }}</td>
+          <td>{{ song.album.artist.artistName }}</td>
+          <td>{{ song.album.albumName }}</td>
+          <td>
+            <span id="duration{{ forloop.counter }}">Loading...</span>
+            <script>
+              function formatDuration(time) {
+                var minutes = Math.floor(time / 60);
+                var seconds = Math.floor(time % 60);
+                var formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
+                return minutes + ":" + formattedSeconds;
+              }
+              (function () {
+                var audio = new Audio("{{ song.song.url }}");
+                var durationSpan = document.getElementById(
+                  "duration{{ forloop.counter }}"
+                );
+  
+                audio.addEventListener("loadedmetadata", function () {
+                  var duration = audio.duration;
+                  durationSpan.textContent = formatDuration(duration);
+  
+                  setInterval(function () {
+                    if (!audio.paused && audio.currentTime > 0) {
+                      duration -= 1; 
+                      durationSpan.textContent = formatDuration(duration);
+                    }
+                  }, 1000);
+                });
+              })();
+            </script>
+          </td>
+          <td>
+            <h2 class="float-start  mt-0 mb-0 mc-0">
+              <i class="ri-play-circle-fill"></i>
+              <div class="audio-file d-none">
+                <audio controls>
+                  <source src="{{song.song.url}}" type="audio/mpeg" />
+                  Your browser does not support the audio tag.
+                </audio>
+              </div>
+            </h2>
+            <h2>
+              <a
+                class="table-dark align-items-center text-decoration-none"
+                data-bs-toggle="modal"
+                data-bs-target="#musicmodal{{song.id}}"
+                href="{% url 'viewsong' song.id %}"
+              >
+                <i class="ri-music-line"></i>
+              </a>
+            </h2>
+            <div
+              class="modal"
+              id="musicmodal{{song.id}}"
+              tabindex="-1"
+              aria-labelledby="mymodellabel1"
+              aria-hidden="true"
+              bis_skin_checked="1"
+            >
+              <div class="modal-dialog" role="document" bis_skin_checked="1">
+                <div class="modal-content" bis_skin_checked="1">
+                  <div class="modal-header" bis_skin_checked="1">
+                    <h4 class="modal-title"><strong>{{ song.songName }}</strong></h4>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="modal-body" bis_skin_checked="1">
+                    <img
+                      src="{{song.songThumbnail.url}}"
+                      width="400px"
+                      style="border-radius: 20px"
+                      alt=""
+                    />
+                    <p class="mt-4">
+                      Artist: <strong>{{ song.album.artist.artistName }} </strong>
+                    </p>
+                    <p>Album: <strong>{{ song.album.albumName }}</strong></p>
+                  </p>
+                  <p>Uploaded at : <strong>{{ song.created }}</strong></p>
+                  </div>
+                  <div class="modal-footer" bis_skin_checked="1">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td><h2><a href="{% url "edit_song" song.id %}" class="text-decoration-none"><i class="ri-edit-box-line"></i></a></h2></td>
+        </tr>
+        {% endfor %}
+  
+    </table>
+  </tbody>
+  
+{% endblock body %}

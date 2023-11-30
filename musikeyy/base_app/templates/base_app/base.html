@@ -158,9 +158,9 @@
           <h5><i class="ri-folder-add-fill"></i> <a href="{% url "add_album" %}" class="text-decoration-none">Add Album </a></h5>
           <hr>
           <h4 class="text-white mb-5">My creations.</h4>
-          <h5><i class="ri-music-2-fill"></i> My Songs</h5>
-          <h5><i class="ri-speak-fill"></i> My Artists</h5>
-          <h5><i class="ri-album-fill"></i> My Albums</h5>
+          <h5><a href="{% url "user_songs" %}" class="text-decoration-none"><i class="ri-music-2-fill"></i> My Songs</h5></a>
+          <h5><a href="{% url "user_artists" %}" class="text-decoration-none"><i class="ri-speak-fill"></i> My Artists</h5></a>
+          <h5><a href="{% url "user_albums" %}" class="text-decoration-none"><i class="ri-album-fill"></i> My Albums</h5></a>
           <hr>
           <form action="{% url 'logout' %}" method="post" class="mt-3">
             {% csrf_token %}

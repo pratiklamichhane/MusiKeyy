@@ -134,3 +134,19 @@ def delete_song(request, song_id):
         return redirect('/') 
     form = SongForm(instance=song) 
     return render(request, 'edit_song.html', {'song': song, 'form': form})
+
+
+@login_required
+def user_uploaded_songs(request):
+    user_songs = Song.objects.filter(added_by=request.user)
+    return render(request, 'base_app/user_songs.html', {'user_songs': user_songs})
+
+@login_required
+def user_uploaded_artists(request):
+    user_artists = Artist.objects.filter(added_by=request.user)
+    return render(request, 'base_app/user_artists.html', {'user_artists': user_artists})
+
+@login_required
+def user_uploaded_albums(request):
+    user_albums = Album.objects.filter(added_by=request.user)
+    return render(request, 'base_app/user_albums.html', {'user_albums': user_albums})
