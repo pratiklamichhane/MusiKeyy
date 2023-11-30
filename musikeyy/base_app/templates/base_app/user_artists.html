@@ -1,25 +1,28 @@
 {% extends "base_app/base.html" %}
+
 {% block title %}My Artists{% endblock title %}
 
 {% block body %}
 <div class="text-center mt-3">
-<h2> Your Artists</h2>
+    <h2>Your Artists</h2>
+    <p class="text-white">Here you can manage, edit, and delete your artists.</p>
+</div>
 
-<p class="text-white">Here you can manage , edit and delete your artist.</p>
-{% for artist, data in artist_data.items %}
-</div>
-<div class="container d-flex gap-4 flex-wrap">
-    <div class="card border-primary mb-3" style="max-width: 20rem;" bis_skin_checked="1">
-        <div class="card-body" bis_skin_checked="1">
-          <h4 class="card-title"><i class="ri-speak-fill"></i> {{ artist.artistName }}</h4>
-          <hr>
-          <p class="card-text"><i class="ri-music-2-fill"></i> Total Songs: <strong>{{ data.artist_songs_count }}</strong></p>
-          <p class="card-text"><i class="ri-album-fill"></i> Total Albums: <strong> {{ data.artist_albums_count }}</strong></p>
-          <a href="{% url "edit_artist" artist.id %}" class="btn btn-primary"><i class="ri-edit-box-line"></i> Edit</a>
+<div class="container">
+    <div class="row">
+        {% for artist, data in artist_data.items %}
+        <div class="col-md-4 mb-3">
+            <div class="card border-primary" style="max-width: 20rem;" bis_skin_checked="1">
+                <div class="card-body" bis_skin_checked="1">
+                    <h4 class="card-title"><i class="ri-speak-fill"></i> {{ artist.artistName }}</h4>
+                    <hr>
+                    <p class="card-text"><i class="ri-music-2-fill"></i> Total Songs: <strong>{{ data.artist_songs_count }}</strong></p>
+                    <p class="card-text"><i class="ri-album-fill"></i> Total Albums: <strong>{{ data.artist_albums_count }}</strong></p>
+                    <a href="{% url "edit_artist" artist.id %}" class="btn btn-primary"><i class="ri-edit-box-line"></i> Edit</a>
+                </div>
+            </div>
         </div>
-      </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
-  
-  
 {% endblock body %}
