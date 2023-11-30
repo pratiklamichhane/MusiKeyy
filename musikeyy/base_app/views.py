@@ -144,9 +144,28 @@ def user_uploaded_songs(request):
 @login_required
 def user_uploaded_artists(request):
     user_artists = Artist.objects.filter(added_by=request.user)
-    return render(request, 'base_app/user_artists.html', {'user_artists': user_artists})
+    artist_data = {}
+    for artist in user_artists:
+        artist_songs_count = Song.objects.filter(album__artist=artist).count()
+        artist_albums_count = Album.objects.filter(artist=artist).count()
+
+        artist_data[artist] = {
+            'artist_songs_count': artist_songs_count,
+            'artist_albums_count': artist_albums_count,
+        }
+    return render(request, 'base_app/user_artists.html', {'user_artists': user_artists  , 'artist_data': artist_data })
 
 @login_required
 def user_uploaded_albums(request):
     user_albums = Album.objects.filter(added_by=request.user)
-    return render(request, 'base_app/user_albums.html', {'user_albums': user_albums})
+    album_data = {}
+    for album in user_albums:
+        artist_name = album.artist.artistName if album.artist else "Unknown"
+
+        album_songs = Song.objects.filter(album=album)
+
+        album_data[album] = {
+            'artist_name': artist_name,
+            'total_songs': album_songs.count(),
+        }
+    return render(request, 'base_app/user_albums.html', {'album_data': album_data})
