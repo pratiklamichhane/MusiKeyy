@@ -7,7 +7,7 @@ class Artist(models.Model):
     artistName = models.CharField(_("Artist Name"), max_length=50)
     created = models.DateTimeField(_("Artist Created Date"), default=timezone.now)
     last_updated = models.DateTimeField(_("Latest Artist Update"), default=timezone.now)
-
+    added_by = models.ForeignKey(User, verbose_name=_("Added By"), on_delete=models.SET_NULL, null=True, blank=True, related_name='added_artists')
 
     class Meta:
         verbose_name = _("Artist")
@@ -21,7 +21,7 @@ class Album(models.Model):
     albumName = models.CharField(_("Album Name"), max_length=50)
     created = models.DateTimeField(_("Album Created Date"), default=timezone.now)
     last_updated = models.DateTimeField(_("Latest Album Update"), default=timezone.now)
-
+    added_by = models.ForeignKey(User, verbose_name=_("Added By"), on_delete=models.SET_NULL, null=True, blank=True, related_name='added_albums')
 
     class Meta:
         verbose_name = _("Album")
@@ -37,8 +37,8 @@ class Song(models.Model):
     songName = models.CharField(_("Song Name"), max_length=50)
     created = models.DateTimeField(_("Song Created Date"), default=timezone.now)
     last_updated = models.DateTimeField(_("Latest Song Update"), default=timezone.now)
-
-
+    added_by = models.ForeignKey(User, verbose_name=_("Added By"), on_delete=models.SET_NULL, null=True, blank=True, related_name='added_songs')
+ 
     class Meta:
         verbose_name = _("Song")
         verbose_name_plural = _("Songs")

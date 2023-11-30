@@ -41,11 +41,13 @@ def create_artist(request):
     if request.method == 'POST':
         form = ArtistForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Redirect to a success page or another view
+            new_artist = form.save(commit=False)
+            new_artist.added_by = request.user
+            new_artist.save()
             return redirect('/')
     else:
         form = ArtistForm()
+    
     return render(request, 'base_app/add_artist.html', {'form': form})
 
 @login_required
@@ -53,7 +55,9 @@ def create_album(request):
     if request.method == 'POST':
         form = AlbumForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_album = form.save(commit=False)
+            new_album.added_by = request.user
+            new_album.save()
             return redirect('/')
     else:
         form = AlbumForm()
@@ -64,8 +68,10 @@ def create_song(request):
     if request.method == 'POST':
         form = SongForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('/') 
+            new_song = form.save(commit=False)
+            new_song.added_by = request.user
+            new_song.save()
+            return redirect('/')
     else:
         form = SongForm()
     return render(request, 'base_app/add_song.html', {'form': form})
