@@ -1,4 +1,3 @@
-// Function to format duration in mm:ss format
 function formatDuration(time) {
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
@@ -7,7 +6,8 @@ function formatDuration(time) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Display duration for all audio elements
+  let pausedTime = {}; 
+
   const audioFiles = document.querySelectorAll(".audio-file audio");
   audioFiles.forEach((audioFile) => {
     audioFile.addEventListener("loadedmetadata", function () {
@@ -18,19 +18,41 @@ document.addEventListener("DOMContentLoaded", function () {
       const duration = formatDuration(audioFile.duration);
       durationElement.textContent = duration;
     });
+
+    audioFile.addEventListener("ended", function () {
+      const currentAudio = this;
+      const nextAudio =
+        currentAudio.parentElement.nextElementSibling.nextElementSibling
+          .querySelector("audio");
+
+      if (nextAudio) {
+        const playButtons = document.querySelectorAll(
+          ".ri-play-circle-fill, .ri-pause-circle-fill"
+        );
+        playButtons.forEach((playBtn) => {
+          playBtn.classList.remove("ri-pause-circle-fill");
+          playBtn.classList.add("ri-play-circle-fill");
+        });
+
+        nextAudio.play();
+      }
+    });
+
+    audioFile.addEventListener("timeupdate", function () {
+      if (this.paused) {
+        pausedTime[this.id] = this.currentTime; 
+      }
+    });
   });
 
-  // Select all elements with the play button class
   const playButtons = document.querySelectorAll(
     ".ri-play-circle-fill, .ri-pause-circle-fill"
   );
 
-  // Add event listeners to each play/pause button
   playButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const isPlaying = button.classList.contains("ri-pause-circle-fill");
 
-      // Pause any other playing audios before playing this one
       const audioFiles = document.querySelectorAll(".audio-file audio");
       audioFiles.forEach((audio) => {
         if (audio !== button.nextElementSibling.querySelector("audio")) {
@@ -38,34 +60,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      // Reset all buttons to play state
-      playButtons.forEach((playBtn) => {
-        playBtn.classList.remove("ri-pause-circle-fill");
-        playBtn.classList.add("ri-play-circle-fill");
-      });
+      const audioFile = button.nextElementSibling.querySelector("audio");
 
       if (!isPlaying) {
-        // Change the icon to pause
         button.classList.remove("ri-play-circle-fill");
         button.classList.add("ri-pause-circle-fill");
 
-        // Play the audio associated with this button
-        const audioFile = button.nextElementSibling.querySelector("audio");
         if (audioFile) {
+          if (pausedTime.hasOwnProperty(audioFile.id)) {
+            audioFile.currentTime = pausedTime[audioFile.id];
+          }
           audioFile.play();
         }
       } else {
-        // Change the icon to play
         button.classList.remove("ri-pause-circle-fill");
         button.classList.add("ri-play-circle-fill");
 
-        // Pause the audio associated with this button
-        const audioFile = button.nextElementSibling.querySelector("audio");
         if (audioFile) {
+          pausedTime[audioFile.id] = audioFile.currentTime;
           audioFile.pause();
-          audioFile.currentTime = 0; // Resets the audio to the beginning
         }
       }
     });
   });
 });
+

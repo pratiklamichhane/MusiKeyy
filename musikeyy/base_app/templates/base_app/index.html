@@ -1,6 +1,6 @@
 {% extends "base_app/base.html" %} {% block title %}Home{% endblock title %}
 {%block body %}
-<div class="stats-container m-5 mt-4 d-flex flex-wrap justify-content-between">
+<div class="stats-container m-5 mt-4 d-flex flex-wrap justify-content-between user-select-none">
   <div class="stats d-flex gap-5 flex-wrap">
     <div
       class="card border-primary mb-3"
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="notifications">
+  <div class="notifications user-select-none">
     <h5>Notifications <i class="ri-notification-3-fill"></i></h5>
 
     <div
@@ -65,7 +65,7 @@
     </div>
   </div>
 </div>
-<div class="body-section m-5 table-responsive">
+<div class="body-section m-5 table-responsive user-select-none">
   <hr />
   <h4>Latest Songs <i class="ri-fire-fill"></i></h4>
   <table class="table table-hover">
@@ -221,4 +221,79 @@
   </ul>
 </div>
 </div>
+<div class="card text-white bg-dark mb-3 user-select-none mx-auto fixed-bottom" style="max-width: 20rem;" bis_skin_checked="1">
+  <div class="card-body" bis_skin_checked="1">
+    <p class="card-title text-center">
+      <i class="ri-skip-back-fill ri-2x float-start" onclick="playPrevious()"></i>
+Audio Controller
+      {% comment %} <i class="ri-play-circle-fill" onclick="playPause()"></i> {% endcomment %}
+      <i class="ri-skip-forward-fill ri-2x float-end" onclick="playNext()"></i>
+    </p>
+    <div class="audio-controller">
+      <input type="range" class="form-range" id="customRange1" 
+             oninput="seekAudio(this.value, 'audio1')" min="0" max="100" value="0">
+      {% comment %} <label id="audioControllerLabel" for="customRange1" class="form-label">Audio controller</label> {% endcomment %}
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  const audioElements = document.querySelectorAll('audio');
+  let currentAudioIndex = 0;
+
+  function seekAudio(value, audioId) {
+    const audio = document.getElementById(audioId);
+    const seekTime = (value / 100) * audio.duration;
+    audio.currentTime = seekTime;
+  }
+
+  function playNext() {
+    audioElements.forEach(audio => audio.pause()); // Pause all audio elements
+
+    currentAudioIndex = (currentAudioIndex + 1) % audioElements.length;
+    audioElements[currentAudioIndex].play();
+    updateControllerLabel(currentAudioIndex);
+  }
+
+  function playPrevious() {
+    audioElements.forEach(audio => audio.pause()); // Pause all audio elements
+
+    currentAudioIndex = (currentAudioIndex - 1 + audioElements.length) % audioElements.length;
+    audioElements[currentAudioIndex].play();
+    updateControllerLabel(currentAudioIndex);
+  }
+
+  function playPause() {
+    const currentAudio = audioElements[currentAudioIndex];
+    const playPauseIcon = document.querySelector('.ri-play-circle-fill');
+
+    if (currentAudio.paused) {
+      audioElements.forEach(audio => audio.pause()); 
+      currentAudio.play();
+      playPauseIcon.classList.remove('ri-play-circle-fill');
+      playPauseIcon.classList.add('ri-pause-circle-fill');
+    } else {
+      currentAudio.pause();
+      playPauseIcon.classList.remove('ri-pause-circle-fill');
+      playPauseIcon.classList.add('ri-play-circle-fill');
+    }
+  }
+
+  function updateControllerLabel(index) {
+    const audioControllerLabel = document.getElementById('audioControllerLabel');
+    audioControllerLabel.textContent = audioElements[index].getAttribute('data-song-name');
+  }
+
+  audioElements.forEach(function(audio) {
+    audio.addEventListener('timeupdate', function() {
+      const audioId = audio.getAttribute('id');
+      const audioController = document.getElementById('customRange1');
+      const value = (audio.currentTime / audio.duration) * 100;
+      audioController.value = value;
+    });
+  });
+</script>
+
  {% endblock body %}
